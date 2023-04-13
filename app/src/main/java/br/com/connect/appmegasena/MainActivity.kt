@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
 //        banco de dados de preferencias
         prefs = getSharedPreferences("db", Context.MODE_PRIVATE)
-        val result = prefs.getString("result", null)
+        val result = prefs.getString("result", "nenhum registro salvo")
         if(result != null){
             txtResult.text = "Ultima aposta: $result"
         }
