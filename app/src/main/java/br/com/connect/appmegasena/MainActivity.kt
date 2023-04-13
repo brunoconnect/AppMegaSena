@@ -3,10 +3,12 @@ package br.com.connect.appmegasena
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import java.util.Random
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,29 +20,46 @@ class MainActivity : AppCompatActivity() {
         val txtResult: TextView = findViewById(R.id.txt_result)
         val btnGenerate: Button = findViewById(R.id.btn_generate)
 
-//        Referencia opcao 2
-//        btnGenerate.setOnClickListener(buttonClickListemer)
-
 //        opcao 3 é a mais recomendada por ser mais simples
         btnGenerate.setOnClickListener {
-            Log.i("teste", "botao clicado!")
+
+            val text = editText.text.toString()
+
+            numberGeneretor(text, txtResult)
         }
     }
 
-//    opcao 1
+    private fun numberGeneretor(text: String, txtResult: TextView){
+        if(text.isNotEmpty()){
+            val qtd = text.toInt()
+            if(qtd >= 6 && qtd <= 15){
 
-//    No layout adiciona o onclick e chama ele aqui
-//    android:onClick="buttonClicked"
+                val numbers = mutableSetOf<Int>()
+                val random = Random()
+                while(true){
+                    val number = random.nextInt(60)
+                    numbers.add(number + 1)
 
-//    fun buttonClicked(view: View){
-//    Log.i("teste", "botao clicado!")
-//    }
+                    if(numbers.size == qtd) {
+                        break
+                    }
+                }
 
-//    opcao 2
-//    val buttonClickListemer = object : View.OnClickListener {
-//    override fun onClick(v: View?) {
-//        Log.i("teste", "botao clicado!")
-//    }
-//}
+//                for(x in numbers) {
+//                    Log.i("teste", "numero que saiu: $x")
+//                }
+
+                txtResult.text = numbers.joinToString(" - ")
+
+            } else {
+                Toast.makeText(this, "Informe um número entre 6 e 15", Toast.LENGTH_LONG).show()
+            }
+
+
+        } else {
+            Toast.makeText(this, "Informe um número entre 6 e 15", Toast.LENGTH_LONG).show()
+        }
+    }
+
 
 }
